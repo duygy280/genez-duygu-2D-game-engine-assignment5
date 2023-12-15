@@ -1,0 +1,14 @@
+using System;
+using Raylib_cs;
+
+class Program
+{
+    public static int LanderX { get; private set; }
+    public static int LanderY { get; private set; }
+    private static int landerWidth = 40;
+    private static int landerHeight = 20;
+    private static int frameCount = 4;
+    private static Color[] landerColors = { Color.WHITE, Color.PURPLE, Color.BLUE, Color.RED };
+    private static int currentFrame = 0;
+    private static float frameTime = 0.2f;
+    private static float elapsedTime = 0;
