@@ -1,0 +1,89 @@
+using System;
+using Raylib_cs;
+
+class Program
+{
+    public static int landerX { get; private set; }
+    public static int landerY { get; private set; }
+
+    static void Main()
+    {
+        const int screenWidth = 800;
+        const int screenHeight = 600;
+
+        Raylib.InitWindow(screenWidth, screenHeight, "Lunar Lander");
+        Raylib.SetTargetFPS(60);
+
+        float landerX = screenWidth / 2;
+        float landerY = screenHeight / 4;
+        float landerSpeedY = 0;
+        float gravity = 0.1f;
+
+        while (!Raylib.WindowShouldClose())
+        {
+            HandleInput();
+
+            landerSpeedY += gravity;
+            landerY += landerSpeedY;
+
+            // Collision detection (basic ground level)
+            if (landerY > screenHeight - 20)
+            {
+                landerY = screenHeight - 20;
+                landerSpeedY = 0;
+            }
+
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.BLACK);
+
+            // Draw Lunar Lander
+            Raylib.DrawRectangle((int)landerX, (int)landerY, 40, 20, Color.WHITE);
+
+            // Draw Instruction
+            Raylib.DrawText("Use Arrow Keys or 'A', 'W', 'D' to Move", 10, screenHeight - 30, 20, Color.WHITE);
+
+            Raylib.EndDrawing();
+        }
+
+        Raylib.CloseWindow();
+    }
+
+    static void HandleInput()
+    {
+        // Check keyboard input
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT) && landerX < 760)
+        {
+            landerX += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT) && landerX > 0)
+        {
+            landerX -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && landerY > 0)
+        {
+            landerY -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && landerY < 580)
+        {
+            landerY += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_A) && landerX > 0)
+        {
+            landerX -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_D) && landerX < 760)
+        {
+            landerX += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && landerY > 0)
+        {
+            landerY -= 5;
+        }
+    }
+}
