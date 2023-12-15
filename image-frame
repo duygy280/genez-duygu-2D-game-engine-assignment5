@@ -1,0 +1,45 @@
+using System;
+using Raylib_cs;
+
+class Program
+{
+    static void Main()
+    {
+        const int screenWidth = 800;
+        const int screenHeight = 600;
+
+        Raylib.InitWindow(screenWidth, screenHeight, "Lunar Lander Animation");
+        Raylib.SetTargetFPS(60);
+
+        int landerWidth = 40;
+        int landerHeight = 20;
+        int frameCount = 4;
+
+        Color[] landerColors = { Color.WHITE, Color.PURPLE, Color.BLUE, Color.RED };
+        int currentFrame = 0;
+        float frameTime = 0.2f;
+        float elapsedTime = 0;
+
+        while (!Raylib.WindowShouldClose())
+        {
+            elapsedTime += Raylib.GetFrameTime();
+
+            
+            if (elapsedTime >= frameTime)
+            {
+                currentFrame = (currentFrame + 1) % frameCount;
+                elapsedTime = 0;
+            }
+
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.BLACK);
+
+            
+            Raylib.DrawRectangle(screenWidth / 2 - landerWidth / 2, screenHeight / 2 - landerHeight / 2, landerWidth, landerHeight, landerColors[currentFrame]);
+
+            Raylib.EndDrawing();
+        }
+
+        Raylib.CloseWindow();
+    }
+}
