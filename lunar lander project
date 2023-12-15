@@ -12,3 +12,81 @@ class Program
     private static int currentFrame = 0;
     private static float frameTime = 0.2f;
     private static float elapsedTime = 0;
+
+    while (!Raylib.WindowShouldClose())
+        {
+            elapsedTime += Raylib.GetFrameTime();
+
+            
+            if (elapsedTime >= frameTime)
+            {
+                currentFrame = (currentFrame + 1) % frameCount;
+                elapsedTime = 0;
+            }
+
+            HandleInput();
+
+            landerSpeedY += gravity;
+            LanderY += (int)landerSpeedY;
+
+            
+            if (LanderY > screenHeight - 20)
+            {
+                LanderY = screenHeight - 20;
+                landerSpeedY = 0;
+            }
+
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.BLACK);
+
+            
+            Raylib.DrawRectangle(LanderX, LanderY, landerWidth, landerHeight, landerColors[currentFrame]);
+
+            
+            Raylib.DrawText("Use Arrow Keys or 'A', 'W', 'D' to Move", 10, screenHeight - 30, 20, Color.WHITE);
+
+            Raylib.EndDrawing();
+        }
+
+        Raylib.CloseWindow();
+    }
+
+    static void HandleInput()
+    {
+        
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT) && LanderX < 760)
+        {
+            LanderX += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT) && LanderX > 0)
+        {
+            LanderX -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP) && LanderY > 0)
+        {
+            LanderY -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN) && LanderY < 580)
+        {
+            LanderY += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_A) && LanderX > 0)
+        {
+            LanderX -= 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_D) && LanderX < 760)
+        {
+            LanderX += 5;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && LanderY > 0)
+        {
+            LanderY -= 5;
+        }
+    }
+}
